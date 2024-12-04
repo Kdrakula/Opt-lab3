@@ -1,0 +1,3 @@
+/Users/kuba/Downloads/UltraMegaBaza8000Optymalizacja-main/cmake-build-debug/CMakeFiles/lab2.dir
+/Users/kuba/Downloads/UltraMegaBaza8000Optymalizacja-main/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/kuba/Downloads/UltraMegaBaza8000Optymalizacja-main/cmake-build-debug/CMakeFiles/rebuild_cache.dir

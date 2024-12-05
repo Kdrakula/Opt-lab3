@@ -13,7 +13,7 @@ int main() {
     system("pause");
     return 0;
 }
-
+//Ala spi
 
 void lab3() {
 

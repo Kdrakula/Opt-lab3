@@ -13,21 +13,21 @@ matrix ff3R(matrix x, matrix ud1, matrix ud2) {
     double C = 0.47;        // współczynnik oporu
     double rho = 1.2;       // gęstość powietrza (kg/m^3)
     double g = 9.81;        // przyspieszenie grawitacyjne (m/s^2)
-    double omega = 10;      // rotacja w kierunku[−15,15](rad/s)
+    double omega = 10;      // rotacja [−15,15](rad/s)
     double v0_x = 5;        // początkowa prędkość pozioma [−10,10](m/s)
     double v0_y = 0;        // początkowa prędkość pionowa (m/s)
+    double x0 = 0;          // poczatkowe polozenie poziome (m)
+    double y0 = 100;        // poczatkowe polozenie pionowe (m)
     double t0 = 0.0;        // czas początkowy (s)
     double dt = 0.01;       // krok czasowy (s)
     double tend = 7.0;      // czas końcowy (s)
 
-    // Warunki poczatkowe
     matrix Y0(4, 1);
-    Y0(0) = 0;    // x(0)
-    Y0(1) = 100;  // y(0)
-    Y0(2) = v0_x; // vx(0)
-    Y0(3) = v0_y; // vy(0)
+    Y0(0) = x0;
+    Y0(1) = y0;
+    Y0(2) = v0_x;
+    Y0(3) = v0_y;
 
-    // Parametry dodatkowe
     ud1(0) = m;
     ud1(1) = r;
     ud1(2) = C;
@@ -35,9 +35,24 @@ matrix ff3R(matrix x, matrix ud1, matrix ud2) {
     ud1(4) = omega;
     ud1(5) = g;
 
-    matrix *Y = solve_ode(df3, t0, dt, tend, Y0, ud1, ud2);
-    matrix result = Y[1](0, 0);
-    return result;
+    matrix *Y = solve_ode(df3, t0, dt, tend, Y0, ud1, x(1));
+
+    int n = get_len(Y[0]);
+    int i0 = 0, i50 = 0;
+
+    for (int i = 0; i < n; i++) {
+        if (abs(Y[1](i, 2) - 50) < abs(Y[1](i50, 2) - 50))
+            i50 = i;
+        if (abs(Y[1](i, 2)) < abs(Y[1](i0, 2)))
+            i0 = i;
+
+        cout << Y[1](i, 0) << ";";
+        cout << Y[1](i, 2) << ";";
+        cout << endl;
+    }
+
+    matrix y = -Y[1](i0, 0);
+    return y;
 }
 
 matrix df3(double t, matrix Y, matrix ud1, matrix ud2) {
@@ -50,7 +65,6 @@ matrix df3(double t, matrix Y, matrix ud1, matrix ud2) {
 
     double S = M_PI * r * r; // Powierzchnia przekroju piłki
 
-    // Rozpakowanie zmiennych stanu
     double x = Y(0);
     double y = Y(1);
     double vx = Y(2);

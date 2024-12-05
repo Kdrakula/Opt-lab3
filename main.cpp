@@ -19,12 +19,11 @@ void lab3() {
 
     double c = 1.22, dc = 2.0, epsilon = 1e-3;
     int Nmax = 1000;
-    matrix ud1, ud2;
-    matrix x0 = rand_mat(2, 1);
-    x0(0, 0) *= 1.0;  // Zakres dla x1 [-1, 1]
-    x0(1, 0) *= 1.0;  // Zakres dla x2 [-1, 1]
-    solution opt = pen(ff3R, x0, c, dc, epsilon, Nmax, ud1, ud2);
-    cout << opt << endl << endl;
+    matrix x0 = matrix(2, 1);
+    x0(0) = 0.;
+    x0(1) = 0.;
+    solution opt = pen(ff3R, x0, c, dc, epsilon, Nmax);
+    cout << opt << endl;
 
 //    // Wyświetlenie wyników
 //    matrix T = opt[0]; // Czas

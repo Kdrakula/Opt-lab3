@@ -212,15 +212,20 @@ matrix fR3(matrix x, matrix ud1, matrix ud2) {
         if (abs(Y[1](i, 1)) < abs(Y[1](i0, 1)))
             i0 = i;
 
+
+        // User-friendly
 //		cout << fixed << setprecision(2) << Y[0](i, 0) << ":\t";
 //        cout << fixed << setprecision(4) << Y[1](i, 0) << ";\t" << Y[1](i, 1) << ";\n";
+
+        // csv
+//		cout << fixed << setprecision(2) << Y[0](i, 0) << ";";
+//        cout << fixed << setprecision(4) << Y[1](i, 0) << ";" << Y[1](i, 1) << ";\n";
     }
 
     cout << Y[1](i50, 0) << ";\t" << Y[1](i50, 1) <<";\n";
     cout << Y[1](i0, 0) << ";\t" << Y[1](i0, 1) <<";\n";
 
     y = -Y[1](i0, 0);
-    cout << ud2;
     if (abs(x(0)) - 10 > 0)
         y = y + ud2 * pow(abs(x(0)) - 10, 2);
     if (abs(x(1)) - 15 > 0)

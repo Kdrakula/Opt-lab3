@@ -16,4 +16,5 @@ add_executable(lab2
         solution.cpp
         solution.h
         user_funs.cpp
-        user_funs.h)
+        user_funs.h
+        user_funs.cpp)

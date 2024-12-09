@@ -39,7 +39,8 @@ int main() {
     }
 
 
-    system("pause");
+//    cout << "\nPress Enter to close..." << endl;
+//    cin.get();
     return 0;
 }
 
@@ -155,17 +156,57 @@ void lab3() {
     const double epsilon = 1e-3;
     const int Nmax = 10000;
 
+    matrix a_lst[3] = {4, 4.4934, 5};
+    matrix x0 = matrix(2, 1, 1.0);
+
+    double x1[100] = {0};
+    double x2[100] = {0};
+
+    ofstream tab1("../results/tab_1.txt");
+
+    for (const auto& a: a_lst) {
+        for (int i = 0; i < 100; i++) {
+            do
+                x0 = 5 * rand_mat(2, 1) + 1;
+            while (norm(x0) > a);
+
+            x1[i] = x0(0);
+            x2[i] = x0(1);
+        }
+
+
+        for (int i = 0; i < 100; i++) {
+            x0(0) = x1[i];
+            x0(1) = x2[i];
+
+            tab1 << x0(0) << ";" << x0(1) << ";";
+
+            solution zew_opt = pen(fun3, x0, c0, 2, epsilon, Nmax, a);
+            tab1 << zew_opt.x(0) << ";" << zew_opt.x(1) << ";" << norm(zew_opt.x) << ";" << zew_opt.y[0]<< solution::f_calls << ";";
+            solution::clear_calls();
+
+            solution wew_opt = pen(fun3, x0, c0, 0.5, epsilon, Nmax, a);
+            tab1 << wew_opt.x(0) << ";" << wew_opt.x(1) << ";" << norm(wew_opt.x) << ";" << wew_opt.y[0] << solution::f_calls << endl;
+            solution::clear_calls();
+        }
+    }
+
+    tab1.close();
+    ofstream tab2("../results/tab1.txt");
+
     // Problem rzeczywisty
-    matrix x1 = matrix(2, 1);
-    x1(0) = 0.;     //vx_0  [-10, 10] (m/s)
-    x1(1) = 0.;     //omega [-15, 15] (rad/s)
+    matrix x_1 = matrix(2, 1);
+    x_1(0) = 0.;     //vx_0  [-10, 10] (m/s)
+    x_1(1) = 0.;     //omega [-15, 15] (rad/s)
 
-//    cout << pen(fR3, x1, c0, 2, epsilon, Nmax) << endl;
+//    cout << pen(fR3, x_1, c0, 2, epsilon, Nmax) << endl;
 
-    x1(0) = -1.64684;    //vx_0
-    x1(1) = 14.9947;   //omega
+    x_1(0) = -1.64684;    //vx_0
+    x_1(1) = 14.9947;   //omega
 
-    fR3(x1, c0, 2);
+    fR3(x_1, c0, 2);
+
+    tab2.close();
 }
 
 void lab4() {
